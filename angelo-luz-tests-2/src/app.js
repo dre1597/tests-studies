@@ -3,7 +3,7 @@
 /* eslint-disable no-return-assign */
 import express from "express";
 import cors from "cors";
-import { uuid } from "uuidv4";
+import { v4 as uuid } from "uuid";
 
 const app = express();
 
@@ -17,7 +17,27 @@ app.get("/products", (request, response) => {
 });
 
 app.post("/products", (request, response) => {
-  // TODO: save products in the array
+  const { code, description, buyPrice, sellPrice, tags } = request.body;
+
+  const productAlreadyExists = products.find(
+    (product) => product.code === code
+  );
+
+  const lovers = productAlreadyExists ? productAlreadyExists.lovers : 0;
+
+  const product = {
+    id: uuid(),
+    code,
+    description,
+    buyPrice,
+    sellPrice,
+    tags,
+    lovers,
+  };
+
+  products.push(product);
+
+  response.status(201).send(product);
 });
 
 app.put("/products/:id", (request, response) => {
