@@ -1,0 +1,30 @@
+{
+  "name": "angelo-luz-tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "jest",
+    "build": "sucrase ./src -d ./dist --transforms imports",
+    "dev": "nodemon src/app.js",
+    "start": "node dist/app.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "jest": {
+    "transform": {
+      ".(js|jsx|ts|tsx)": "@sucrase/jest-plugin"
+    }
+  },
+  "devDependencies": {
+    "@sucrase/jest-plugin": "^2.2.1",
+    "@types/jest": "^25.2.1",
+    "jest": "^25.3.0",
+    "nodemon": "^2.0.16",
+    "sucrase": "^3.21.0"
+  },
+  "dependencies": {
+    "express": "^4.18.1"
+  }
+}
