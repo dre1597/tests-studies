@@ -12,8 +12,8 @@ app.use(cors());
 
 let products = [];
 
-app.get("/products", (request, response) => {
-  // TODO: get all products
+app.get("/products", (_request, response) => {
+  return response.json(products);
 });
 
 app.post("/products", (request, response) => {
@@ -64,7 +64,6 @@ app.delete("/products/:code", (request, response) => {
   const index = products.findIndex((product) => product.code == code);
 
   if (index === -1) {
-    console.log("ok");
     response.status(400).send();
   }
 
