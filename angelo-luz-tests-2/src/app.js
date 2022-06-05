@@ -61,11 +61,16 @@ app.put("/products/:id", (request, response) => {
 app.delete("/products/:code", (request, response) => {
   const { code } = request.params;
 
-  const index = products.findIndex((product) => product.code === code);
+  const index = products.findIndex((product) => product.code == code);
 
   if (index === -1) {
+    console.log("ok");
     response.status(400).send();
   }
+
+  products = products.filter((product) => product.code != code);
+
+  response.status(204).send();
 });
 
 app.post("/products/:code/love", (request, response) => {
