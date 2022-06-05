@@ -114,6 +114,30 @@ test("GetProduct - Should return 204 if there is not a product with the code", a
   expect(response.status).toBe(204);
 });
 
+test("UpdateProduct - Should be not possible to update the number of lovers manually", async () => {
+  const response = await request(app).post("/products").send(products[0]);
+
+  const updatedProduct = {
+    ...products[0],
+    description: "Product 3",
+    lovers: 10,
+  };
+
+  const expectedUpdatedProduct = {
+    ...products[0],
+    description: "Product 3",
+  };
+
+  const responseUpdate = await request(app)
+    .put(`/products/${response.body.id}`)
+    .send(updatedProduct);
+
+  expect(responseUpdate.body).not.toMatchObject(updatedProduct);
+  expect(responseUpdate.body).toMatchObject(expectedUpdatedProduct);
+  expect(responseUpdate.body.lovers).not.toBe(10);
+  expect(responseUpdate.body.lovers).toBe(0);
+});
+
 test("LoveProduct - Should be possible to add a love to a product", async () => {
   const response = await request(app).post("/products").send(products[0]);
 
