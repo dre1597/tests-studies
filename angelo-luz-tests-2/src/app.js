@@ -59,7 +59,13 @@ app.put("/products/:id", (request, response) => {
 });
 
 app.delete("/products/:code", (request, response) => {
-  // TODO: remove product by code
+  const { code } = request.params;
+
+  const index = products.findIndex((product) => product.code === code);
+
+  if (index === -1) {
+    response.status(400).send();
+  }
 });
 
 app.post("/products/:code/love", (request, response) => {
