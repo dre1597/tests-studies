@@ -38,3 +38,18 @@ test("CreateProduct - Should return 201 on success", async () => {
 
   expect(response.statusCode).toBe(201);
 });
+
+test("UpdateProduct - Should be possible update a product", async () => {
+  const response = await request(app).post("/products").send(products[0]);
+
+  const updatedProduct = {
+    ...products[0],
+    description: "Product 3",
+  };
+
+  const responseUpdate = await request(app)
+    .put(`/products/${response.body.id}`)
+    .send(updatedProduct);
+
+  expect(responseUpdate.body).toMatchObject(updatedProduct);
+});
