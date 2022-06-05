@@ -37,7 +37,7 @@ app.post("/products", (request, response) => {
 
   products.push(product);
 
-  response.status(201).send(product);
+  return response.status(201).send(product);
 });
 
 app.put("/products/:id", (request, response) => {
@@ -47,7 +47,7 @@ app.put("/products/:id", (request, response) => {
   const product = products.find((product) => product.id === id);
 
   if (!product) {
-    response.status(400).send();
+    return response.status(400).send();
   }
 
   product.description = description;
@@ -55,7 +55,7 @@ app.put("/products/:id", (request, response) => {
   product.sellPrice = sellPrice;
   product.tags = tags;
 
-  response.json(product);
+  return response.json(product);
 });
 
 app.delete("/products/:code", (request, response) => {
@@ -64,12 +64,12 @@ app.delete("/products/:code", (request, response) => {
   const index = products.findIndex((product) => product.code == code);
 
   if (index === -1) {
-    response.status(400).send();
+    return response.status(400).send();
   }
 
   products = products.filter((product) => product.code != code);
 
-  response.status(204).send();
+  return response.status(204).send();
 });
 
 app.post("/products/:code/love", (request, response) => {
@@ -78,14 +78,14 @@ app.post("/products/:code/love", (request, response) => {
   const product = products.find((product) => product.code == code);
 
   if (!product) {
-    response.status(400).send();
+    return response.status(400).send();
   }
 
   products
     .filter((product) => product.code == code)
     .map((product) => (product.lovers += 1));
 
-  response.json({ lovers: product.lovers });
+  return response.json({ lovers: product.lovers });
 });
 
 app.get("/products/:code", (request, response) => {
@@ -94,9 +94,9 @@ app.get("/products/:code", (request, response) => {
   const productsFound = products.filter((product) => product.code == code);
 
   if (productsFound.length === 0) {
-    response.status(204).send();
+    return response.status(204).send();
   }
-  response.json(productsFound);
+  return response.json(productsFound);
 });
 
 export default app;
