@@ -222,4 +222,19 @@ describe("ProductValidation", () => {
 
     expect(product.description).toBe("abc");
   });
+  test("Should not accept description with 51 characters", () => {
+    expect(() => {
+      Validator.validProduct(
+        new Product(
+          1,
+          "Lorem ipsum dolor sit amet, consectetur vestibulum.",
+          50.0,
+          80.0,
+          ["tag1", "tag2"]
+        )
+      );
+    }).toThrow(
+      new Error("Description should have between 3 and 50 characters")
+    );
+  });
 });
