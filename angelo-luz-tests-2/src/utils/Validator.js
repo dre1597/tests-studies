@@ -4,5 +4,7 @@ export class Validator {
     if (description.length < 3) {
       throw new Error("Description should have between 3 and 50 caracteres");
     }
+
+    return product;
   }
 }
