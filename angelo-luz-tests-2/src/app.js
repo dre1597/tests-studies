@@ -73,7 +73,19 @@ app.delete("/products/:code", (request, response) => {
 });
 
 app.post("/products/:code/love", (request, response) => {
-  // TODO: add 1 love in a product by code
+  const { code } = request.params;
+
+  const product = products.find((product) => product.code == code);
+
+  if (!product) {
+    response.status(400).send();
+  }
+
+  products
+    .filter((product) => product.code == code)
+    .map((product) => (product.lovers += 1));
+
+  response.json({ lovers: product.lovers });
 });
 
 app.get("/products/:code", (request, response) => {
