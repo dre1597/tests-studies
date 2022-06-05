@@ -24,11 +24,17 @@ beforeEach(() => {
   ];
 });
 
-it("Should be possible add a new product", async () => {
+test("CreateProduct - Should be possible add a new product", async () => {
   const response = await request(app).post("/products").send(products[0]);
 
   expect(response.body).toMatchObject({
     ...products[0],
     lovers: 0,
   });
+});
+
+test("CreateProduct - Should return 201 on success", async () => {
+  const response = await request(app).post("/products").send(products[0]);
+
+  expect(response.statusCode).toBe(201);
 });
