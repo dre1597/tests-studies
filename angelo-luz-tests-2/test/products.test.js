@@ -119,7 +119,7 @@ test("LoveProduct - Should be possible to add a love to a product", async () => 
 
   const responseLove = await request(app)
     .post(`/products/${response.body.code}/love`)
-    .send(response.body);
+    .send();
 
   expect(responseLove.body).toMatchObject({
     lovers: 1,
