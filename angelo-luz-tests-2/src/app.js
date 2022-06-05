@@ -77,7 +77,11 @@ app.post("/products/:code/love", (request, response) => {
 });
 
 app.get("/products/:code", (request, response) => {
-  // TODO: get products by code
+  const { code } = request.params;
+
+  const productsFound = products.filter((product) => product.code == code);
+
+  response.json(productsFound);
 });
 
 export default app;
