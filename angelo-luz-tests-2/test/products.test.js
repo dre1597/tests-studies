@@ -107,3 +107,9 @@ test("GetProduct - Should be possible to get a product by code", async () => {
   expect(responseGet.body).toHaveLength(2);
   expect(responseGet.body).toMatchObject([products[0], products[0]]);
 });
+
+test("GetProduct - Should return 204 if there is not a product with the code", async () => {
+  const response = await request(app).get("/products/-1");
+
+  expect(response.status).toBe(204);
+});
