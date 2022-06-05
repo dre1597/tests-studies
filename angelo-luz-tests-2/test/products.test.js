@@ -113,3 +113,15 @@ test("GetProduct - Should return 204 if there is not a product with the code", a
 
   expect(response.status).toBe(204);
 });
+
+test("LoveProduct - Should be possible to add a love to a product", async () => {
+  const response = await request(app).post("/products").send(products[0]);
+
+  const responseLove = await request(app)
+    .post(`/products/${response.body.code}/love`)
+    .send(response.body);
+
+  expect(responseLove.body).toMatchObject({
+    lovers: 1,
+  });
+});
