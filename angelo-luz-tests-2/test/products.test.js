@@ -212,7 +212,7 @@ describe("ProductValidation", () => {
         new Product(1, "aa", 50.0, 80.0, ["tag1", "tag2"])
       );
     }).toThrow(
-      new Error("Description should have between 3 and 50 caracteres")
+      new Error("Description should have between 3 and 50 characters")
     );
   });
 });
