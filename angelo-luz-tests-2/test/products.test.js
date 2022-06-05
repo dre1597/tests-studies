@@ -179,3 +179,26 @@ test("LoveProduct - A Product with the same code should extends the number of lo
 
   expect(index).toBe(-1);
 });
+
+test("LoveProduct - Creating a product with an code that already should share the amount of the existing one", async () => {
+  const response = await request(app).post("/products").send(products[0]);
+
+  await request(app).post(`/products/${response.body.code}/love`).send();
+  await request(app).post(`/products/${response.body.code}/love`).send();
+
+  const responseSecondPost = await request(app)
+    .post("/products")
+    .send(products[2]);
+
+  const responseGet = await request(app).get(`/products/${response.body.code}`);
+
+  const firstProduct = responseGet.body.find(
+    (product) => product.id === response.body.id
+  );
+
+  const secondProduct = responseGet.body.find(
+    (product) => product.id === responseSecondPost.body.id
+  );
+
+  expect(firstProduct.lovers).toBe(secondProduct.lovers);
+});
