@@ -255,4 +255,21 @@ describe("ProductValidation", () => {
       "Lorem ipsum dolor sit amet, consectetur tincidunt."
     );
   });
+
+  test("Should not accept a buy price greater than a sell price", () => {
+    expect(() => {
+      Validator.validProduct(
+        new Product(1, "any description", 80.0, 50.0, ["tag1", "tag2"])
+      );
+    }).toThrow(new Error("Buy price cannot be greater than sell price"));
+  });
+
+  test("Should accept a sell price greater than a buy price", () => {
+    const product = Validator.validProduct(
+      new Product(1, "any description", 50.0, 80.0, ["tag1", "tag2"])
+    );
+
+    expect(product.buyPrice).toBe(50.0);
+    expect(product.sellPrice).toBe(80.0);
+  });
 });
