@@ -53,3 +53,9 @@ test("UpdateProduct - Should be possible update a product", async () => {
 
   expect(responseUpdate.body).toMatchObject(updatedProduct);
 });
+
+test("UpdateProduct - Should not be possible do updated an inexistent product", async () => {
+  const response = await request(app).put("/products/1");
+
+  expect(response.statusCode).toBe(400);
+});
