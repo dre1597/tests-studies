@@ -59,3 +59,9 @@ test("UpdateProduct - Should not be possible do updated an inexistent product", 
 
   expect(response.statusCode).toBe(400);
 });
+
+test("DeleteProduct - Should not be possible do delete an inexistent product", async () => {
+  const response = await request(app).delete("/products/1");
+
+  expect(response.statusCode).toBe(400);
+});
