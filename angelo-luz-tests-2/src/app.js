@@ -3,7 +3,7 @@
 /* eslint-disable no-return-assign */
 import express from "express";
 import cors from "cors";
-import { Product } from "./models/product";
+import { Product } from "./models/Product";
 
 const app = express();
 
