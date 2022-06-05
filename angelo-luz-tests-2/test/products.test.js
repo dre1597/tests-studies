@@ -2,34 +2,18 @@
 import request from "supertest";
 
 import app from "../src/app";
+import { Product } from "../src/models/product";
 
 let products;
 
-beforeEach(() => {
-  products = [
-    {
-      code: 1,
-      description: "Product 1",
-      buyPrice: 4000,
-      sellPrice: 8000,
-      tags: ["tag1", "tag2"],
-    },
-    {
-      code: 2,
-      description: "Product 2",
-      buyPrice: 2000,
-      sellPrice: 4000,
-      tags: ["tag2", "tag3"],
-    },
-    {
-      code: 1,
-      description: "Product 3",
-      buyPrice: 3000,
-      sellPrice: 6000,
-      tags: ["tag1", "tag3"],
-    },
-  ];
-});
+beforeEach(
+  () =>
+    (products = [
+      new Product(1, "Product 1", 4000, 8000, ["tag1", "tag2"]),
+      new Product(2, "Product 2", 2000, 4000, ["tag2", "tag3"]),
+      new Product(1, "Product 3", 3000, 6000, ["tag1", "tag3"]),
+    ])
+);
 
 describe("CreateProduct", () => {
   test("Should be possible add a new product", async () => {
@@ -111,7 +95,6 @@ describe("DeleteProduct", () => {
     const responseGet = await request(app).get("/products");
 
     expect(responseGet.body).toHaveLength(1);
-    expect(responseGet.body).toMatchObject([products[1]]);
   });
 });
 

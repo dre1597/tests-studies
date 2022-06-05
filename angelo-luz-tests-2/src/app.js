@@ -17,7 +17,7 @@ app.get("/products", (_request, response) => {
 });
 
 app.post("/products", (request, response) => {
-  const { code, description, buyPrice, sellPrice, tags } = request.body;
+  const { code, description, buyPrice, sellPrice, tags, id } = request.body;
 
   const productAlreadyExists = products.find(
     (product) => product.code === code
@@ -31,7 +31,8 @@ app.post("/products", (request, response) => {
     buyPrice,
     sellPrice,
     tags,
-    lovers
+    lovers,
+    id
   );
 
   products.push(product);
