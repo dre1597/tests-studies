@@ -61,7 +61,17 @@ test("UpdateProduct - Should not be possible do updated an inexistent product", 
 });
 
 test("DeleteProduct - Should not be possible do delete an inexistent product", async () => {
-  const response = await request(app).delete("/products/1");
+  const response = await request(app).delete("/products/-1");
 
   expect(response.statusCode).toBe(400);
+});
+
+test("DeleteProduct - Should return 204 on success", async () => {
+  const response = await request(app).post("/products").send(products[0]);
+
+  const responseDelete = await request(app).delete(
+    `/products/${response.body.code}`
+  );
+
+  expect(responseDelete.statusCode).toBe(204);
 });
