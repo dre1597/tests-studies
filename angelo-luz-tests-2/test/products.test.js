@@ -21,6 +21,13 @@ beforeEach(() => {
       sellPrice: 4000,
       tags: ["tag2", "tag3"],
     },
+    {
+      code: 1,
+      description: "Product 3",
+      buyPrice: 3000,
+      sellPrice: 6000,
+      tags: ["tag1", "tag3"],
+    },
   ];
 });
 
@@ -83,7 +90,7 @@ test("ListProducts - Should be possible to list all the products", async () => {
   const response = await request(app).get("/products");
 
   expect(response.body).toHaveLength(2);
-  expect(response.body).toMatchObject(products);
+  expect(response.body).toMatchObject([products[0], products[1]]);
 });
 
 test("DeleteProduct - Should be possible to delete all products with the same code", async () => {
@@ -154,4 +161,21 @@ test("LoveProduct - Should return 400 if not find the product by the code", asyn
   const response = await request(app).post(`/products/-1/love`).send();
 
   expect(response.status).toBe(400);
+});
+
+test("LoveProduct - A Product with the same code should extends the number of lovers of the others products with the same code", async () => {
+  const response = await request(app).post("/products").send(products[0]);
+  await request(app).post(`/products/${response.body.code}/love`).send();
+  await request(app).post(`/products/${response.body.code}/love`).send();
+  await request(app).post(`/products/${response.body.code}/love`).send();
+  await request(app).post("/products").send(products[2]);
+  const responseGet = await request(app)
+    .get(`/products/${response.body.code}`)
+    .send();
+
+  const loversArray = responseGet.body.map((product) => product.lovers);
+
+  const index = loversArray.findIndex((elem) => elem !== 4);
+
+  expect(index).toBe(-1);
 });
