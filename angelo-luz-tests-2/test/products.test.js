@@ -216,3 +216,13 @@ describe("ProductValidation", () => {
     );
   });
 });
+
+describe("ProductValidation", () => {
+  test("Should accept description with 3 characters", () => {
+    const product = Validator.validProduct(
+      new Product(1, "abc", 50.0, 80.0, ["tag1", "tag2"])
+    );
+
+    expect(product.description).toBe("abc");
+  });
+});
