@@ -125,3 +125,9 @@ test("LoveProduct - Should be possible to add a love to a product", async () => 
     lovers: 1,
   });
 });
+
+test("LoveProduct - Should return 400 if not find the product by the code", async () => {
+  const response = await request(app).post(`/products/-1/love`).send();
+
+  expect(response.status).toBe(400);
+});
