@@ -85,3 +85,15 @@ test("ListProducts - Should be possible to list all the products", async () => {
   expect(response.body).toHaveLength(2);
   expect(response.body).toMatchObject(products);
 });
+
+test("DeleteProduct - Should be possible to delete all products with the same code", async () => {
+  const response = await request(app).post("/products").send(products[0]);
+  await request(app).post("/products").send(products[0]);
+
+  await request(app).delete(`/products/${response.body.code}`);
+
+  const responseGet = await request(app).get("/products");
+
+  expect(responseGet.body).toHaveLength(1);
+  expect(responseGet.body).toMatchObject([products[1]]);
+});
