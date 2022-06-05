@@ -2,7 +2,8 @@
 import request from "supertest";
 
 import app from "../src/app";
-import { Product } from "../src/models/product";
+import { Product } from "../src/models/Product";
+import { Validator } from "../src/utils/Validator";
 
 let products;
 
@@ -201,5 +202,17 @@ describe("LoveProduct", () => {
     );
 
     expect(firstProduct.lovers).toBe(secondProduct.lovers);
+  });
+});
+
+describe("ProductValidation", () => {
+  test("Should not accept description with 2 characters", () => {
+    expect(() => {
+      Validator.validProduct(
+        new Product(1, "aa", 50.0, 80.0, ["tag1", "tag2"])
+      );
+    }).toThrow(
+      new Error("Description should have between 3 and 50 caracteres")
+    );
   });
 });
