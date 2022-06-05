@@ -3,7 +3,7 @@
 /* eslint-disable no-return-assign */
 import express from "express";
 import cors from "cors";
-import { v4 as uuid } from "uuid";
+import { Product } from "./models/product";
 
 const app = express();
 
@@ -25,15 +25,14 @@ app.post("/products", (request, response) => {
 
   const lovers = productAlreadyExists ? productAlreadyExists.lovers : 0;
 
-  const product = {
-    id: uuid(),
+  const product = new Product(
     code,
     description,
     buyPrice,
     sellPrice,
     tags,
-    lovers,
-  };
+    lovers
+  );
 
   products.push(product);
 
