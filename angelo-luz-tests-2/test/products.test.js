@@ -215,9 +215,6 @@ describe("ProductValidation", () => {
       new Error("Description should have between 3 and 50 characters")
     );
   });
-});
-
-describe("ProductValidation", () => {
   test("Should accept description with 3 characters", () => {
     const product = Validator.validProduct(
       new Product(1, "abc", 50.0, 80.0, ["tag1", "tag2"])
