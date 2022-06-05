@@ -41,7 +41,21 @@ app.post("/products", (request, response) => {
 });
 
 app.put("/products/:id", (request, response) => {
-  // TODO: update product by id
+  const { id } = request.params;
+  const { description, buyPrice, sellPrice, tags } = request.body;
+
+  const product = products.find((product) => product.id === id);
+
+  if (!product) {
+    response.status(400).send();
+  }
+
+  product.description = description;
+  product.buyPrice = buyPrice;
+  product.sellPrice = sellPrice;
+  product.tags = tags;
+
+  response.json(product);
 });
 
 app.delete("/products/:code", (request, response) => {
