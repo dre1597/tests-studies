@@ -81,6 +81,9 @@ app.get("/products/:code", (request, response) => {
 
   const productsFound = products.filter((product) => product.code == code);
 
+  if (productsFound.length === 0) {
+    response.status(204).send();
+  }
   response.json(productsFound);
 });
 
