@@ -75,3 +75,13 @@ test("DeleteProduct - Should return 204 on success", async () => {
 
   expect(responseDelete.statusCode).toBe(204);
 });
+
+test("ListProducts - Should be possible to list all the products", async () => {
+  await request(app).post("/products").send(products[0]);
+  await request(app).post("/products").send(products[1]);
+
+  const response = await request(app).get("/products");
+
+  expect(response.body).toHaveLength(2);
+  expect(response.body).toMatchObject(products);
+});
