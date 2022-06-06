@@ -9,6 +9,10 @@ export class Validator {
       throw new Error("Buy price need to be positive");
     }
 
+    if (sellPrice <= 0) {
+      throw new Error("Sell price need to be positive");
+    }
+
     if (buyPrice > sellPrice) {
       throw new Error("Buy price cannot be greater than sell price");
     }
