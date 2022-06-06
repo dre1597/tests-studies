@@ -288,4 +288,20 @@ describe("ProductValidation", () => {
 
     expect(product.buyPrice).toBe(50.0);
   });
+
+  test("Should not accept a non-positive sell price", () => {
+    expect(() => {
+      Validator.validProduct(
+        new Product(1, "any description", 80.0, -50.0, ["tag1", "tag2"])
+      );
+    }).toThrow(new Error("Sell price need to be positive"));
+  });
+
+  test("Should accept a positive sell price", () => {
+    const product = Validator.validProduct(
+      new Product(1, "any description", 50.0, 80.0, ["tag1", "tag2"])
+    );
+
+    expect(product.buyPrice).toBe(50.0);
+  });
 });
