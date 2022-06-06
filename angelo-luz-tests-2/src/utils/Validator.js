@@ -5,6 +5,10 @@ export class Validator {
       throw new Error("Description should have between 3 and 50 characters");
     }
 
+    if (buyPrice <= 0) {
+      throw new Error("Buy price need to be positive");
+    }
+
     if (buyPrice > sellPrice) {
       throw new Error("Buy price cannot be greater than sell price");
     }
